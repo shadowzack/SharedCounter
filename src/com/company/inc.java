@@ -1,16 +1,21 @@
 package com.company;
 
 public class inc implements Runnable {
-    counter c;
+    Counter counter;
+
 
     public inc() {
-        c = new counter();
+        counter = new Counter();
     }
 
     public void run() {
-        for (int i = 0; i < 100; i++) {
-            c.increment();
+
+
+        for (int i = 0; i < 10000; i++) {
+            counter.increment();
         }
+
+
     }
 
 }

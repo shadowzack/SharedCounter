@@ -4,17 +4,36 @@ public class Main {
 
 
     public static void main(String[] args) {
-        counter c = new counter();
+        Counter counter = new Counter();
+        Thread threadIncrement = new Thread(new inc());
+        Thread threadDecrement = new Thread(new dec());
+        Petersons petersons = new Petersons();
 
-        Thread t1 = new Thread(new inc());
-        Thread t2 = new Thread(new dec());
-        t1.start();
-        t2.start();
+        petersons.i = 0;
+        try {
+            petersons.lock();
+            threadIncrement.start();
+        } finally {
+            System.out.println(counter.getValue());
+            petersons.i = 0;
+            petersons.unlock();
+        }
+        Petersons petersons2 = new Petersons();
+        petersons2.i = 1;
+        try {
+
+            petersons2.lock();
+            threadDecrement.start();
+        } finally {
+            petersons2.i = 1;
+            petersons2.unlock();
+        }
+
 
         try {
-            t1.join();
-            t2.join();
-            System.out.println(c.getValue());
+            threadIncrement.join();
+            threadDecrement.join();
+            System.out.println(counter.getValue());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,17 +1,24 @@
 package com.company;
 
+import java.util.concurrent.locks.Lock;
+
 public class dec implements Runnable {
 
-    counter c;
+    Counter counter;
+
+
 
     public dec() {
-        c = new counter();
+        counter = new Counter();
     }
 
     public void run() {
-        for (int i = 0; i < 100; i++) {
-            c.decrement();
+
+        for (int i = 0; i < 10000; i++) {
+            counter.decrement();
         }
+
+
     }
 
 }
